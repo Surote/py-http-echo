@@ -14,4 +14,4 @@ def home():
     return re_dict
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5124)
+    app.run(host='0.0.0.0',port=8080)
