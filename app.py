@@ -1,11 +1,12 @@
 from flask import Flask,request
+import os
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @app.route('/')
 def home():
-    re_dict = {'headers': {},'remote_addr': str(request.remote_addr)}
+    re_dict = {'headers': {},'remote_addr': str(request.remote_addr),'pod_name': str(os.getenv(HOSTNAME,"N/A"))}
 
     print(request.headers, request.json,request.query_string,request.remote_addr)
     for i in request.headers:
