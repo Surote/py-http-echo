@@ -9,7 +9,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 def home():
     re_dict = {'headers': {},'remote_addr': str(request.remote_addr),'pod_name': str(os.getenv("HOSTNAME","N/A"))}
     background_color = os.environ.get("BACKGROUND_COLOR", "blue")
-    print(request.headers, request.json,request.query_string,request.remote_addr)
+    print(request.headers,request.query_string,request.remote_addr)
     for i in request.headers:
         if i[0] not in re_dict.keys():
             re_dict['headers'][i[0]] = i[1]
@@ -20,9 +20,10 @@ def home():
 
 @app.route('/api/v1')
 def json_return():
+    print(request.headers, request.query_string,request.remote_addr)
     re_dict = {'headers': {},'remote_addr': str(request.remote_addr),'pod_name': str(os.getenv("HOSTNAME","N/A")),
             'http_method':str(request.method), 'http_req_url':str(request.url) }
-    print(request.headers, request.json,request.query_string,request.remote_addr)
+    
     print("test")
     print(request.method,request.url)
     for i in request.headers:
