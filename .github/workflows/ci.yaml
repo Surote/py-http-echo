@@ -37,26 +37,17 @@ jobs:
           registry: quay.io
           username: ${{ secrets.QUAY_USER }}
           password: ${{ secrets.QUAY_SECRET }}
-
-      - id: docker_meta
-        uses: docker/metadata-action@v4.4.0
-        with:
-          images: quay.io/${{secrets.QUAY_USER}}/py-http-header
-          tags: type=sha,format=long
-
       -
         name: Build and push to QUAY
         uses: docker/build-push-action@v4
         id: quay-build-push
         with:
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
 
       - name: Sign image with a key
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY "${TAGS}@${DIGEST}"
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
         env:
-          TAGS:  ${{ steps.docker_meta.outputs.tags }}
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIV }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASS }}
-          DIGEST: ${{ steps.quay-build-push.outputs.digest }}
