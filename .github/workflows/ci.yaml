@@ -46,11 +46,17 @@ jobs:
           push: true
           tags: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
 
+      - id: docker_meta
+        uses: docker/metadata-action@v4.4.0
+        with:
+          images: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
+          tags: type=sha,format=long
+
       - name: Sign image with a key
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY "${TAGS}"
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY "${TAGS}@${DIGEST}"
         env:
-          TAGS: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
+          TAGS: ${{ steps.docker_meta.outputs.tags }}
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVE }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASS }}
           DIGEST: ${{ steps.quay-build-push.outputs.digest }}
