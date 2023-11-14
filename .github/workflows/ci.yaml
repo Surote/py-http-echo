@@ -50,7 +50,7 @@ jobs:
         run: |
           cosign sign --yes --key env://COSIGN_PRIVATE_KEY "${TAGS}@${DIGEST}"
         env:
-          TAGS: ${{ github.sha }}
+          TAGS: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVE }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASS }}
           DIGEST: ${{ steps.quay-build-push.outputs.digest }}
