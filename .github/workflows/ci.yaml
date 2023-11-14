@@ -49,7 +49,7 @@ jobs:
       - id: docker_meta
         uses: docker/metadata-action@v4.4.0
         with:
-          images: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
+          images: quay.io/${{secrets.QUAY_USER}}/py-http-header
           tags: type=sha,format=long
 
       - name: Sign image with a key
