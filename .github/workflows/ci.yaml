@@ -45,9 +45,15 @@ jobs:
           push: true
           tags: quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
 
+      - name: Write signing key to disk
+        run: 'echo "$KEY" > cosign.key'
+        shell: bash
+        env:
+          KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+
       - name: Sign image with a key
         run: |
-          cosign sign --yes --key env://COSIGN_PRIVATE_KEY quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
+          cosign sign --yes --key cosign.key quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
         env:
           COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
