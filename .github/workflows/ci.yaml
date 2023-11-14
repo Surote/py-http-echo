@@ -49,5 +49,5 @@ jobs:
         run: |
           cosign sign --yes --key env://COSIGN_PRIVATE_KEY quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
         env:
-          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIV }}
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASS }}
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
