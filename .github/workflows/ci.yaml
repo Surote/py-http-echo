@@ -1,8 +1,11 @@
 name: build push image
 on:
   push:
+    paths-ignore:
+      - ".github/**"
+      - "README.md"
     branches:
-      - 'main'
+      - "main"
 
 jobs:
   docker:
@@ -11,35 +14,29 @@ jobs:
       COSIGN_EXPERIMENTAL: "true"
       COSIGN_DEBUG: 1
     steps:
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: surote/py-http-echo:${{ github.sha }}
 
-      -
-        name: Login to QUAY 
+      - name: Login to QUAY
         uses: docker/login-action@v2
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USER }}
           password: ${{ secrets.QUAY_SECRET }}
-      -
-        name: Build and push to QUAY
+      - name: Build and push to QUAY
         uses: docker/build-push-action@v4
         id: quay-build-push
         with:
