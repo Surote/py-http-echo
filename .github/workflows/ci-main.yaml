@@ -6,9 +6,11 @@ on:
       - "README.md"
     branches:
       - "main"
+    tags:
+      - "*"
 
 jobs:
-  docker:
+  build-push:
     runs-on: ubuntu-latest
     env:
       COSIGN_EXPERIMENTAL: "true"
