@@ -5,7 +5,7 @@ on:
       - ".github/**"
       - "README.md"
     tags:
-      - "v*"
+      - "*"
 
 jobs:
   build-push:
