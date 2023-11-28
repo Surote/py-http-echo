@@ -10,9 +10,6 @@ on:
 jobs:
   build-push-dev:
     runs-on: ubuntu-latest
-    env:
-      COSIGN_EXPERIMENTAL: "true"
-      COSIGN_DEBUG: 1
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
