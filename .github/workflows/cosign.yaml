@@ -1,0 +1,28 @@
+on:
+  workflow_run:
+    workflows: [build push image]
+    types:
+      - completed
+
+jobs:
+  cosign-dev:
+    runs-on: ubuntu-latest
+    env:
+      COSIGN_EXPERIMENTAL: "true"
+      COSIGN_DEBUG: 1
+    steps:
+      # Install Cosign
+      - uses: sigstore/cosign-installer@main
+
+      - name: Sign image with a key
+        run: |
+          cosign sign --yes --key env://COSIGN_PRIVATE_KEY quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
+        env:
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+
+      - name: Verify image with a key
+        run: |
+          cosign verify --key env://COSIGN_PUBLIC_KEY quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
+        env:
+          COSIGN_PUBLIC_KEY: ${{ secrets.COSIGN_PUBLIC_KEY }}
