@@ -55,3 +55,27 @@ jobs:
           cosign verify --key env://COSIGN_PUBLIC_KEY quay.io/${{secrets.QUAY_USER}}/py-http-header:${{ github.sha }}
         env:
           COSIGN_PUBLIC_KEY: ${{ secrets.COSIGN_PUBLIC_KEY }}
+
+  checkout-deployment:
+    runs-on: ubuntu-latest
+    needs: build-push-dev
+    steps:
+      - name: Checkout deployment
+        uses: actions/checkout@v4
+        with:
+          repository: Surote/demo-kustomize
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set new image
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.spec.template.spec.containers[0].image="quay.io/rh_ee_swongpai/py-http-header:${{ github.sha }}"' env/dev/deployment.yaml
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Update DEV image ${{ github.sha }}
+          token: ${{ secrets.GH_PAT }}
+          title: Update DEV image
+          body: Update DEV image
+          branch: dev-update-image
