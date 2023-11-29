@@ -75,6 +75,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: Update DEV image ${{ github.sha }}
+          token: ${{ secrets.GH_PAT }}
           title: Update DEV image
           body: Update DEV image
           branch: dev-update-image
