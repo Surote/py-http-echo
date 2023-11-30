@@ -29,7 +29,7 @@ def json_return():
     for i in request.headers:
         if i[0] not in re_dict.keys():
             re_dict['headers'][i[0]] = i[1]
-         
+          
     return re_dict
 
 if __name__ == '__main__':
