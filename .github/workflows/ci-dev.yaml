@@ -84,6 +84,6 @@ jobs:
         with:
           commit-message: Update DEV image ${{ github.sha }}
           token: ${{ secrets.GH_PAT }}
-          title: Update DEV image ${{env.SHA_SHORT}}
-          body: Update DEV image ${{env.SHA_SHORT}}
-          branch: dev-pr-image-${{env.SHA_SHORT}}
+          title: Update DEV image ${{SHA_SHORT}}
+          body: Update DEV image ${{SHA_SHORT}}
+          branch: dev-pr-image-${{SHA_SHORT}}
