@@ -66,6 +66,13 @@ jobs:
           repository: Surote/demo-kustomize
           token: ${{ secrets.GH_PAT }}
 
+      - name: Set short sha
+        id: ssha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Check short sha
+        run: echo ${{ steps.ssha.outputs.sha_short }}
+
       - name: Set new image
         uses: mikefarah/yq@master
         with:
@@ -76,6 +83,6 @@ jobs:
         with:
           commit-message: Update DEV image ${{ github.sha }}
           token: ${{ secrets.GH_PAT }}
-          title: Update DEV image
-          body: Update DEV image
-          branch: dev-update-image
+          title: Update DEV image ${{ steps.ssha.outputs.sha_short }}
+          body: Update DEV image ${{ steps.ssha.outputs.sha_short }}
+          branch: dev-pr-image-${{ steps.ssha.outputs.sha_short }}
