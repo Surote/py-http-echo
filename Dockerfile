@@ -6,7 +6,6 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY templates ./templates/
-COPY certificate ./certificate
 COPY app.py .
 
 CMD [ "gunicorn", "-b", "0.0.0.0:8080", "app:app"]
