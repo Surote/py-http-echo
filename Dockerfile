@@ -9,5 +9,5 @@ COPY templates ./templates/
 COPY certificate ./certificate
 COPY app.py .
 
-#CMD [ "gunicorn", "-b", "0.0.0.0:8080", "app:app"]
-CMD [ "gunicorn", "-b", "0.0.0.0:8443", "app:app","--certfile=/py-http-echo/certificate/tls.crt", "--keyfile=/py-http-echo/certificate/tls.key"]
+CMD [ "gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+#CMD [ "gunicorn", "-b", "0.0.0.0:8443", "app:app","--certfile=/py-http-echo/certificate/tls.crt", "--keyfile=/py-http-echo/certificate/tls.key"]
