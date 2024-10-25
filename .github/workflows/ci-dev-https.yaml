@@ -5,7 +5,7 @@ on:
       - ".github/**"
       - "README.md"
     branches:
-      - "dev"
+      - "dev-https"
 
 jobs:
   build-push-dev:
