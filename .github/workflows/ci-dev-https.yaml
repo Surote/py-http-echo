@@ -1,4 +1,4 @@
-name: build push image
+name: build push image for https
 on:
   push:
     paths-ignore:
