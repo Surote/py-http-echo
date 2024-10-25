@@ -24,7 +24,6 @@ def json_return():
     re_dict = {'headers': {},'remote_addr': str(request.remote_addr),'pod_name': str(os.getenv("HOSTNAME","N/A")),
             'http_method':str(request.method), 'http_req_url':str(request.url) }
     
-    
     print("test")
     print(request.method,request.url)
     for i in request.headers:
