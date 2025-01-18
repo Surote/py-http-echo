@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/python-311:1-77
+FROM registry.access.redhat.com/ubi9/python-311:9.5-1736353526
 
 WORKDIR /py-http-echo
 
