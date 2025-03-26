@@ -1,9 +1,13 @@
 from flask import Flask,request,render_template
+from prometheus_flask_exporter import PrometheusMetrics
 import os
 import json
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Application info', version='1.0.3')
 
 @app.route('/')
 def home():
@@ -34,3 +38,4 @@ def json_return():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=8080)
+
