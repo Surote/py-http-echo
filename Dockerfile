@@ -11,6 +11,5 @@ RUN pip3 install -r requirements.txt
 COPY templates ./templates/
 COPY app.py .
 
-USER 1001
 CMD [ "gunicorn", "-b", "0.0.0.0:8080", "app:app"]
 #CMD [ "gunicorn", "-b", "0.0.0.0:8443", "app:app","--certfile=/py-http-echo/certificate/tls.crt", "--keyfile=/py-http-echo/certificate/tls.key"]
