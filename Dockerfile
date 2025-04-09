@@ -1,9 +1,10 @@
-FROM registry.access.redhat.com/ubi9/python-311:9.5-1742890420
+#FROM registry.access.redhat.com/ubi9/python-311:9.5-1742890420
+FROM python:3.11-slim
 
 WORKDIR /py-http-echo
 
 USER root
-RUN dnf -y upgrade
+#RUN dnf -y upgrade
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt

@@ -9,7 +9,6 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 metrics = PrometheusMetrics(app)
 metrics.info('app_info', 'Application info', version='1.0.3')
 
-
 @app.route('/')
 def home():
     re_dict = {'headers': {},'remote_addr': str(request.remote_addr),'pod_name': str(os.getenv("HOSTNAME","N/A"))}
