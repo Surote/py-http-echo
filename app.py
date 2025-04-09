@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template
+from flask import Flask,request,render_template,make_response
 from prometheus_flask_exporter import PrometheusMetrics
 import os
 import json
@@ -19,8 +19,18 @@ def home():
             re_dict['headers'][i[0]] = i[1]
 
     # Render an HTML template with the background color
-    return render_template('home.html', json_data=json.dumps(re_dict, indent=4), background_color=background_color)
+    render_template('home.html', json_data=json.dumps(re_dict, indent=4), background_color=background_color)
     #return re_dict
+    # Create a response object
+    response = make_response(render_template)
+
+    # Add service mesh headers
+    response.headers['local_service'] = 'call from py-reader'
+    response.headers['X-B3-Traceid'] = request.headers.get('X-B3-Traceid', '')
+    response.headers['X-B3-Spanid'] = request.headers.get('X-B3-Spanid', '')
+    response.headers['X-B3-Parentspanid'] = request.headers.get('X-B3-Parentspanid', '')
+
+    return response
 
 @app.route('/api/v1')
 def json_return():
